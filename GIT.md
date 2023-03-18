@@ -17,8 +17,8 @@ comando in locale che applica in modo effettivo le modifiche fatte con la add so
 - `git commit` apre un editor di testo (il mio di default è nano)
 - `git commit -m "messaggio"`
 
-> la sintassi carina è la seguente
->>_verbo: descrizione delle modifiche/rimozioni effettuate_
+> la sintassi carina è: _verbo: descrizione delle modifiche effettuate_
+>> update/add/delete: nomediqualcosa
 
 
 
@@ -29,6 +29,7 @@ comando che carica le modifiche su github
 - `git push`
 
 ## git pull
+comando per scaricare eventuali modifiche effettuate
 
 ## git checkout
 
