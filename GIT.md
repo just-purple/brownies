@@ -28,12 +28,13 @@ comando che carica le modifiche su github (remoto)
 
 - `git push`
 
-## git pull
-comando per scaricare eventuali modifiche effettuate
+## pull
 
 comando per scaricare le modifiche fatte su github (remoto)
 
-- `git push`
+- `git pull`
+
+⚠️ prima di iniziare a modificare il progetto lanciare sempre il comando git pull
 
 ## git checkout
 
