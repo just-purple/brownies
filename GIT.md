@@ -24,11 +24,15 @@ comando in locale che applica in modo effettivo le modifiche fatte con la add so
 
 ## push 
 
-comando che carica le modifiche su github
+comando che carica le modifiche su github (remoto)
 
 - `git push`
 
 ## git pull
+
+comando per scaricare le modifiche fatte su github (remoto)
+
+- `git push`
 
 ## git checkout
 
