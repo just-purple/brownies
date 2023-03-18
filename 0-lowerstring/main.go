@@ -9,7 +9,7 @@ func main() {
 
 	var parola string
 
-	fmt.Println("Dammi una frase")
+	fmt.Println("Dammi una parola")
 	fmt.Scanln(&parola)
 
 	parola = strings.ToLower(parola)
