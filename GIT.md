@@ -1,3 +1,26 @@
+# comandi rapidi da tastiera
+
+## control+c
+
+- _control c_ termina il comando in esecuzione
+
+
+# comandi da terminale
+
+## code
+
+- `code .` apre la cartella corrente su vs code
+
+## cd
+
+- `cd percorso` campia directory
+
+
+## go
+
+- `go run percorso` esegue
+
+
 # git
 
 
@@ -7,21 +30,21 @@ comando in locale che aggiunge una modifica dalla working directory alla staging
 
 - `git add percorso`
 
-- `git add .` la cartella . è la cartella corrente
+- `git add .` la cartella corrente
 
 - `git add nomefile` 
 
 
 ## commit
 
-L'uso precendete del comando git add è necessario per selezionare le modifiche che verranno inserite per il commit successivo.
+L'uso precendete del comando git add è necessario per selezionare le modifiche che verranno inserite nel commit successivo.
 
 Commit è un comando in locale che crea un'istantanea delle modifiche effettuate nella cronologia di un progetto Git, applica quindi in modo effettivo le modifiche fatte con la git add
 
 - `git commit` apre un editor di testo (il mio di default è nano)
 - `git commit -m "messaggio"`
 
-> la sintassi carina è: _verbo: descrizione delle modifiche effettuate_
+> la sintassi carina è _verbo: descrizione delle modifiche effettuate_
 >> update/add/delete: nomediqualcosa
 
 
