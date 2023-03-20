@@ -25,11 +25,11 @@ func getNSubjects() (int, error) {
 		return 0, errors.New("Error: number <= 0")
 	}
 
-	return nSubject, err
+	return nSubject, nil
 }
 
 // funzione che dato un numero n restituisce una slice di n subjects (fornite dall'utente)
-func getSubjects(n int) []Subject {
+func getSubjects(n int) ([]Subject, error) {
 
 	subjects := []Subject{}
 
@@ -40,24 +40,19 @@ func getSubjects(n int) []Subject {
 		fmt.Printf("Enter name subject %d \n", i+1)
 		fmt.Scanln(&s.name)
 
-		// per l'inserimento dei voti vorrei eseguire un ciclo con condizione di uscita
-		// se il valore fornito dall'utente è un intero >= 0 allora finisce il ciclo e si va avanti con la vita
-		for {
-			fmt.Printf("Enter score subject %d \n", i+1)
-			_, err := fmt.Scanln(&s.score)
-			// controllo dell'input ricorsivo fino a che l'utente non inserisce un valore adeguato
-			if err != nil || s.score < 0 {
-				fmt.Println("Error, try again")
-			} else {
-				break
-			}
+		fmt.Printf("Enter score subject %d \n", i+1)
+		_, err := fmt.Scanln(&s.score)
+
+		// se il valore fornito dall'utente è un intero < 0 allora fesco dalla funzione
+		if err != nil || s.score < 0 {
+			return nil, errors.New("Error: wrong format")
 		}
 
 		// alla lista subjects di tipo Subject viene aggiunta s (anch'essa di tipo Subject) che ho precedentemente riempito con i valori presi in input
 		subjects = append(subjects, s)
 	}
 
-	return subjects
+	return subjects, nil
 }
 
 // funzione che data una slice di Subject restituisce la subject con lo score più alto
@@ -103,7 +98,11 @@ func main() {
 	}
 
 	// creazione di una slice delle materie di tipo Subject, che verrà riempita grazie alla funzione getSubjects
-	subjects := getSubjects(nSubject)
+	subjects, err := getSubjects(nSubject)
+	if err != nil {
+		fmt.Println("Error:", err.Error())
+		return
+	}
 
 	// stampa della slice inserita con la funzione getSubjects
 	fmt.Println("Slice provided by the user:", subjects)
