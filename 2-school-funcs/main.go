@@ -38,8 +38,7 @@ func getSubjects(n int) []Subject {
 			// controllo dell'input ricorsivo fino a che l'utente non inserisce un valore adeguato
 			if err != nil || s.score < 0 {
 				fmt.Println("Error, try again")
-			}
-			else {
+			} else {
 				break
 			}
 		}

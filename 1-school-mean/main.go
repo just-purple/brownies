@@ -1,5 +1,6 @@
 package main
 
+// fmt package provides the function to print anything
 import (
 	"fmt"
 )
