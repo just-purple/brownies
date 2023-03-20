@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -15,6 +16,15 @@ func getNSubjects() (int, error) {
 	nSubject := 0
 	fmt.Println("Number of subjects: ")
 	_, err := fmt.Scanln(&nSubject)
+
+	if err != nil {
+		return 0, err
+	}
+
+	if nSubject <= 0 {
+		return 0, errors.New("Error: number <= 0")
+	}
+
 	return nSubject, err
 }
 
@@ -84,16 +94,11 @@ func getMean(s []Subject) int {
 }
 
 func main() {
-
 	nSubject, err := getNSubjects()
 	// controlli sull'input riferiti ai risultati della funzione getNSubjects
 	// vengono effettuati nel main così con la return il programma può finire
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	if nSubject <= 0 {
-		fmt.Println("Error: number <= 0")
+		fmt.Println("Error:", err.Error())
 		return
 	}
 
