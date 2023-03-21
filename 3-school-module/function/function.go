@@ -1,6 +1,5 @@
 // declaration on the top to state that this is a utility package
-// package definition
-// a utility package is supposed to provide some variables to a package who imports it
+// a utility package is supposed to provide some exportmembers to a package who imports it
 package function
 
 import (
@@ -17,7 +16,7 @@ type Subject struct {
 	score float64
 }
 
-// funzione che restituisce un intero (fornito dall'utente, che indica il numero di materie) e un errore
+// funzione pubblica che restituisce un intero (fornito dall'utente, che indica il numero di materie) e un errore
 func GetNSubjects() (int, error) {
 	// creazione della variabile di appoggio, gli metto lo stesso nome che ha nel main
 	nSubject := 0
@@ -29,7 +28,7 @@ func GetNSubjects() (int, error) {
 	}
 
 	if nSubject <= 0 {
-		return 0, errors.New("Error: number <= 0")
+		return 0, errors.New("number <= 0")
 	}
 
 	return nSubject, nil

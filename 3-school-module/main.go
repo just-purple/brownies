@@ -9,9 +9,11 @@ import (
 )
 
 func main() {
-	// package declaration: package name (name of the directory - function) can be different than package declaration
-	// package declaration is used to create package reference variable
-	fmt.Println("github.com/just-purple/brownies/3-school-module/main.go ==> main()")
+	/*
+		// package declaration: package name (name of the directory - function) can be different than package declaration
+		// package declaration is used to create package reference variable
+		fmt.Println("github.com/just-purple/brownies/3-school-module/main.go ==> main()")
+	*/
 
 	nSubject, err := function.GetNSubjects()
 	// controlli sull'input riferiti ai risultati della funzione getNSubjects
@@ -31,7 +33,7 @@ func main() {
 	// stampa della slice inserita con la funzione getSubjects
 	fmt.Println("Slice provided by the user:", subjects)
 
-	fmt.Println("Subject with the highest score: ", function.GetMaxSubject(subjects))
+	fmt.Println("Highest score subject: ", function.GetMaxSubject(subjects))
 
 	fmt.Println("Average: ", function.GetMean(subjects))
 }
