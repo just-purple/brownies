@@ -22,16 +22,16 @@ func getNSubjects() (int, error) {
 	}
 
 	if nSubject <= 0 {
-		return 0, errors.New("Error: number <= 0")
+		return 0, errors.New("number <= 0")
 	}
 
 	return nSubject, nil
 }
 
-// funzione che dato un numero n restituisce una slice di n subjects (fornite dall'utente)
+// funzione che dato un numero n restituisce una slice di n subjects (fornite dall'utente), e un errore
 func getSubjects(n int) ([]Subject, error) {
 
-	subjects := []Subject{}
+	subjects := []Subject{} // equivale a var subjects []Subject ?
 
 	//riempimento delle materie e dei voti
 	for i := 0; i < n; i++ {
@@ -45,7 +45,7 @@ func getSubjects(n int) ([]Subject, error) {
 
 		// se il valore fornito dall'utente è un intero < 0 allora fesco dalla funzione
 		if err != nil || s.score < 0 {
-			return nil, errors.New("Error: wrong format")
+			return nil, errors.New("wrong format")
 		}
 
 		// alla lista subjects di tipo Subject viene aggiunta s (anch'essa di tipo Subject) che ho precedentemente riempito con i valori presi in input
@@ -65,6 +65,12 @@ func getMaxSubject(s []Subject) string {
 	}
 
 	// ricerca del massimo score
+
+	// il ciclo for può essere utilizzato con un range di slice per iterare attraverso gli elementi di una slice.
+	// il codice eseguito in questo blocco verrà ripetuto per ogni elemento nella slice s, ma ad esempio con l'operatore [:3] si restituiscono solo i primi tre valori della slice
+	// se non si ha bisogno dell'indice è possibile ometterlo utilizzando _ come nome della variabile
+	// se invece l'indice viene indicato, range s restituisce una coppia di valori per ogni elemento nella slice: il primo è l'indice dell'elemento e il secondo è il valore dell'elemento stesso
+	// ad esempio, la prima iterazione del ciclo for avrà i valori index = 0 e value = math, e così via
 	for _, subject := range s {
 		if subject.score > max.score {
 			max = subject
