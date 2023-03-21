@@ -4,19 +4,18 @@ package main
 
 import (
 	"fmt"
-	// this path appeared after command+s e moccoli
 	// in go.mod file you can find the module
-	function "github.com/just-purple/brownies/3-school-module/school"
+	// this path appeared after command+s e moccoli
+	"github.com/just-purple/brownies/3-school-module/school"
 )
 
 func main() {
-	/*
-		// package declaration: package name (name of the directory - function) can be different than package declaration
-		// package declaration is used to create package reference variable
-		fmt.Println("github.com/just-purple/brownies/3-school-module/main.go ==> main()")
-	*/
 
-	nSubject, err := function.GetNSubjects()
+	// package declaration: package name (name of the directory - school) can be different than package declaration
+	// package declaration is used to create package reference variable
+	// fmt.Println("github.com/just-purple/brownies/3-school-module/main.go ==> main()")
+
+	nSubject, err := school.GetNSubjects()
 	// controlli sull'input riferiti ai risultati della funzione getNSubjects
 	// vengono effettuati nel main così con la return il programma può finire
 	if err != nil {
@@ -25,7 +24,7 @@ func main() {
 	}
 
 	// creazione di una slice delle materie di tipo Subject, che verrà riempita grazie alla funzione getSubjects
-	subjects, err := function.GetSubjects(nSubject)
+	subjects, err := school.GetSubjects(nSubject)
 	if err != nil {
 		fmt.Println("Error:", err.Error())
 		return
@@ -34,7 +33,7 @@ func main() {
 	// stampa della slice inserita con la funzione getSubjects
 	fmt.Println("Slice provided by the user:", subjects)
 
-	fmt.Println("Highest score subject: ", function.GetMaxSubject(subjects))
+	fmt.Println("Highest score subject: ", school.GetMaxSubject(subjects))
 
-	fmt.Println("Average: ", function.GetMean(subjects))
+	fmt.Println("Average: ", school.GetMean(subjects))
 }

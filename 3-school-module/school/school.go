@@ -1,6 +1,6 @@
 // declaration on the top to state that this is a utility package
 // a utility package is supposed to provide some exportmembers to a package who imports it
-package function
+package school
 
 import (
 	"errors"
