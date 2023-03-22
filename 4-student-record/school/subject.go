@@ -6,8 +6,8 @@ import (
 )
 
 type Subject struct {
-	name  string
-	score float64
+	Name  string
+	Score float64
 }
 
 // funzione pubblica che restituisce un intero (fornito dall'utente, che indica il numero di materie) e un errore
@@ -38,13 +38,13 @@ func GetSubjects(n int) ([]Subject, error) {
 		s := Subject{}
 
 		fmt.Printf("Enter name subject %d \n", i+1)
-		fmt.Scanln(&s.name)
+		fmt.Scanln(&s.Name)
 
 		fmt.Printf("Enter score subject %d \n", i+1)
-		_, err := fmt.Scanln(&s.score)
+		_, err := fmt.Scanln(&s.Score)
 
 		// se il valore fornito dall'utente è un intero < 0 allora fesco dalla funzione
-		if err != nil || s.score < 0 {
+		if err != nil || s.Score < 0 {
 			return nil, errors.New("wrong format")
 		}
 

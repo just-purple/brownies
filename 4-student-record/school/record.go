@@ -23,13 +23,13 @@ func NewStudentRecord(sub ...Subject) StudentRecord {
 func (sr StudentRecord) MaxScoreSubject() Subject {
 
 	max := Subject{
-		name:  "",
-		score: 0,
+		Name:  "",
+		Score: 0,
 	}
 	// range è un costrutto che sta dentro al for per scorrere una slice
 	// in questo caso dobbiamo scorrere il riferimento sr che però non è tipo slice, ma la struct StudentRecord al suo interno ha una slice, quindi basterà accedere a quel campo (sr.subjects)
 	for _, subject := range sr.subjects {
-		if subject.score > max.score {
+		if subject.Score > max.Score {
 			max = subject
 		}
 	}
@@ -42,7 +42,7 @@ func (sr StudentRecord) Mean() float64 {
 
 	sumScore := 0.0
 	for _, subject := range sr.subjects {
-		sumScore += subject.score
+		sumScore += subject.Score
 	}
 
 	len := float64(len(sr.subjects))

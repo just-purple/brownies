@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	school "github.com/just-purple/brownies/4-student-record/school"
+	"github.com/just-purple/brownies/4-student-record/school"
 )
 
 func main() {
@@ -27,7 +27,8 @@ func main() {
 	s := school.NewStudentRecord(subjects...)
 
 	max := s.MaxScoreSubject()
-	fmt.Println("Highest score subject: ", max)
+	// per poter leggere nel main il campo name della struttura Subject, va messo con la lettera maiuscola, in questo modo può essere esportato
+	fmt.Println("Highest score subject: ", max.Name)
 
 	// metodo ovvero funzione che prende come riferimento la struct StudentRecord
 	// la caratteristica del metodo è che gli passi il riferimento con: nomeriferimento (s) . nomemetodo (Mean)
