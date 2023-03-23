@@ -2,7 +2,7 @@
 
 ## control+c
 
-- _control c_ termina il comando in esecuzione
+- _control c_ su terminale termina il comando in esecuzione
 
 
 # comandi da terminale
@@ -44,8 +44,9 @@ Commit è un comando in locale che crea un'istantanea delle modifiche effettuate
 - `git commit` apre un editor di testo (il mio di default è nano)
 - `git commit -m "messaggio"`
 
-> la sintassi carina è _verbo: descrizione delle modifiche effettuate_
->> update/add/delete: nomediqualcosa
+### Git Commit Messages Style-Guides
+
+https://gist.github.com/rishavpandey43/84665ffe3cea76400d8e5a1ad7133a79
 
 
 ## push 
