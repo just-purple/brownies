@@ -13,7 +13,7 @@
 
 ## cd
 
-- `cd percorso` campia directory
+- `cd percorso` cambia directory
 
 
 ## go
