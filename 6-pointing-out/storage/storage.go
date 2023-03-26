@@ -93,6 +93,7 @@ func (s *Storage) Dump(path string) error {
 	return nil
 }
 
+// method Inc accepts no parameter and increments all the value inside of the storage by 1
 func (s *Storage) Inc() {
 
 	for _, v := range s.store {
@@ -100,10 +101,51 @@ func (s *Storage) Inc() {
 	}
 }
 
+// method Take takes the element at the specified index:
+// it takes an integer named position and an integer named taken by reference
 func (s *Storage) Take(position int, taken *int) error {
 	if position < 0 || position > len(s.store) {
 		return errors.New("invalid position")
 	}
 	*taken = *s.store[position]
+	// it returns only an error which is not nil if the specified position does not exists
 	return nil
+}
+
+// method Add accepts an integers and adds it to the storage
+// il tipo Storage viene preso per riferimento
+// il numero che prende in ingresso viene passato per valore perchè tanto si tratta di un numero
+func (s *Storage) Add(number int) {
+	// il numero da aggiungere alla fine della storage viene passato per riferimento (locazione in memoria)
+	s.store = append(s.store, &number)
+}
+
+// method Remove remove the element at the specified index:
+// it takes an integer named position
+func (s *Storage) Remove(position int) error {
+	if position < 0 || position > len(s.store) {
+		return errors.New("invalid position")
+	}
+	// If you want to keep your array ordered:
+	//  all of the elements at the right of the deleting index you have to shift by one to the left
+	// dentro la funzione non posso mettere s.store poichè è un puntatore, quindi creo una variabile di appoggio slice
+	// dopo la rimozione metto la slice aggiornata dentro s.store
+	slice := s.store
+	slice = append(slice[:position], slice[position+1:]...)
+	s.store = slice
+
+	// it returns only an error which is not nil if the specified position does not exists
+	return nil
+}
+
+// method FunkyReduce which
+// add each next even number to each odd number
+// remove each even number
+func (s *Storage) FunkyReduce() {
+	// remove even numbers
+	for i, v := range s.store {
+		if *v%2 == 0 {
+			s.Remove(i)
+		}
+	}
 }
