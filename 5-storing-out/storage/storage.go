@@ -3,57 +3,60 @@ package storage
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // Storage struct contains a slice of int
 type Storage struct {
 	// store, stock
-	Store []int
+	store []int
 }
 
 // Load function returns a storage given a path to a file
 func Load(path_file string) (Storage, error) {
 
 	file, err := os.Open(path_file)
-
-	// create a Storage to hold the file contents
-	result := Storage{}
-
 	// in caso di file rotto torna una Storage vuota e un errore
 	if err != nil {
-		return result, err
+		return Storage{}, err
 	}
 	// it's important to close the file after reading it
 	defer file.Close()
 
 	// viene creato uno scanner con la funzione bufio.NewScanner() per leggere il file riga per riga
 	scanner := bufio.NewScanner(file)
-	// per ogni riga, viene utilizzata la funzione strconv.Atoi() per convertire la stringa in un intero
-	// Se la conversione fallisce, la funzione restituisce un errore
-	for scanner.Scan() {
-		number, err := strconv.Atoi(scanner.Text())
+	result := Storage{}
+	// lancio di scan alla prima riga
+	scanner.Scan()
+
+	// la funzione TrimSpace toglie gli eventiali spazi all'inizio e alla fine a una stringa (scanner.Text())
+	trimmed := strings.TrimSpace(scanner.Text())
+	line := strings.Split(trimmed, " ")
+
+	// conversione da string a int, se fallisce restituisce errore
+	for _, v := range line {
+		number, err := strconv.Atoi(v)
 		if err != nil {
-			return result, err
+			return Storage{}, err
 		}
-		result.Store = append(result.Store, number)
+		result.store = append(result.store, number)
+	}
+	// se scanner.Scan() è true significa che c'è una seconda riga
+	if scanner.Scan() {
+		return Storage{}, errors.New("storage file must be one line")
 	}
 
-	if err := scanner.Err(); err != nil {
-		return result, err
-	}
-
-	// se tutto è andato a buon fine la funzione Load restituisce una Storage e nessun errore
 	return result, nil
 }
 
 // Print method prints the storage
 func (s Storage) Print() {
-
 	// loop for-each per iterare attraverso gli elementi della slice s e utilizza fmt.Printf per stampare ciascun elemento, separato da spazio
-	for _, i := range s.Store {
+	for _, i := range s.store {
 		fmt.Printf("%d ", i)
 	}
 	// stampa una nuova riga vuota alla fine della storage
@@ -61,3 +64,33 @@ func (s Storage) Print() {
 }
 
 // Dump method, for the Storage struct, accepts a path to a file and stores it into it (if the file is not empty overwrite it)
+func (s Storage) Dump(path string) error {
+	// la funzione create se riceve un path esistente lo vuota, altrimenti crea un nuovo file a quel path
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	// Always remember to close the open file descriptor when you finish working with the file
+	// so that the system can reuse it
+	defer file.Close()
+
+	// immagazzinare la s nel file creato, e sovrascrivere la s in un file non vuoto
+	dump := ""
+	for _, i := range s.store {
+		// conversione, la funzione Sprintf prende i e lo mette dentro %d quindi se vogliamo uno spazio fra un numero e l'altro bastera mettere uno spazio dopo %d
+		toAppend := fmt.Sprintf("%d ", i)
+		// append sulla stringa dump
+		dump += toAppend
+	}
+	// mette una riga a capo in fondo al file
+	dump += "\n"
+
+	_, err = file.WriteString(dump)
+
+	if err != nil {
+		return err
+	}
+
+	// se tutto va bene
+	return nil
+}

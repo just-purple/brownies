@@ -14,11 +14,13 @@ const WRONG_FILE_PATH = "./wrong_storage.txt"
 const NOT_EXISTING_PATH = "./wrong_path.txt"
 
 func main() {
-	ints, err := storage.Load(FILE_PATH)
+	ints, err := storage.Load("viola.txt")
 	if err != nil {
 		fmt.Println("Error", err.Error())
-	} else {
-		fmt.Println(ints)
+		return
 	}
+	ints.Print()
+
+	ints.Dump("viola.txt")
 
 }
