@@ -12,7 +12,7 @@ import (
 // Storage struct contains a slice of int
 type Storage struct {
 	// store, stock
-	store []*int
+	store []int
 }
 
 // Load function returns a storage given a path to a file
@@ -42,7 +42,7 @@ func Load(path_file string) (*Storage, error) {
 		if err != nil {
 			return nil, err
 		}
-		result.store = append(result.store, &number)
+		result.store = append(result.store, number)
 	}
 	// se scanner.Scan() è true significa che c'è una seconda riga
 	if scanner.Scan() {
@@ -56,7 +56,7 @@ func Load(path_file string) (*Storage, error) {
 func (s *Storage) Print() {
 	// loop for-each per iterare attraverso gli elementi della slice s e utilizza fmt.Printf per stampare ciascun elemento, separato da spazio
 	for _, v := range s.store {
-		fmt.Printf("%d ", *v)
+		fmt.Printf("%d ", v)
 	}
 	// stampa una nuova riga vuota alla fine della storage
 	fmt.Println()
@@ -77,7 +77,7 @@ func (s *Storage) Dump(path string) error {
 	dump := ""
 	for _, v := range s.store {
 		// conversione, la funzione Sprintf prende i e lo mette dentro %d quindi se vogliamo uno spazio fra un numero e l'altro bastera mettere uno spazio dopo %d
-		toAppend := fmt.Sprintf("%d ", *v)
+		toAppend := fmt.Sprintf("%d ", v)
 		// append sulla stringa dump
 		dump += toAppend
 	}
@@ -95,9 +95,9 @@ func (s *Storage) Dump(path string) error {
 
 // method Inc accepts no parameter and increments all the value inside of the storage by 1
 func (s *Storage) Inc() {
+	for i := 0; i < len(s.store); i++ {
+		s.store[i]++
 
-	for _, v := range s.store {
-		*v++
 	}
 }
 
@@ -107,7 +107,7 @@ func (s *Storage) Take(position int, taken *int) error {
 	if position < 0 || position > len(s.store) {
 		return errors.New("invalid position")
 	}
-	*taken = *s.store[position]
+	*taken = s.store[position]
 	// it returns only an error which is not nil if the specified position does not exists
 	return nil
 }
@@ -117,7 +117,7 @@ func (s *Storage) Take(position int, taken *int) error {
 // il numero che prende in ingresso viene passato per valore perchè tanto si tratta di un numero
 func (s *Storage) Add(number int) {
 	// il numero da aggiungere alla fine della storage viene passato per riferimento (locazione in memoria)
-	s.store = append(s.store, &number)
+	s.store = append(s.store, number)
 }
 
 // method Remove remove the element at the specified index:
@@ -144,7 +144,7 @@ func (s *Storage) Remove(position int) error {
 func (s *Storage) FunkyReduce() {
 	// remove even numbers
 	for i, v := range s.store {
-		if *v%2 == 0 {
+		if v%2 == 0 {
 			s.Remove(i)
 		}
 	}
