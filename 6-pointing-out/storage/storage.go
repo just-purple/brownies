@@ -140,22 +140,16 @@ func (s *Storage) Remove(position int) error {
 
 // method FunkyReduce
 func (s *Storage) FunkyReduce() {
-<<<<<<< HEAD
 	i := 0
 	// loop with entry condition so that if the last number is even leave it like it is
 	for i+1 < len(s.store) {
 		// add to each number in even position the following number (in odd position)
 		// per accedere al valore dell'elemento della slice metto il simbolo *
-		*s.store[i] += *s.store[i+1]
+		s.store[i] += s.store[i+1]
 		// then remove each number in odd position
 		s.Remove(i + 1)
 		i++
-=======
-	// remove even numbers
-	for i, v := range s.store {
-		if v%2 == 0 {
-			s.Remove(i)
-		}
->>>>>>> 6ddf1d32450a128df6fb260a114d6df4816bbb27
+		// remove even numbers
 	}
+
 }
