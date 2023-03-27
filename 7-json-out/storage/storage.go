@@ -1,5 +1,3 @@
-// re-implement Dump function using the json library
-
 package storage
 
 import (
@@ -15,7 +13,7 @@ type Storage struct {
 	store []int
 }
 
-// Load function returns a storage given a path to a file
+// Load function returns a storage given a path to a file json
 // la funzione Load prende il nome del file da leggere come parametro e restituisce la Storage contenente la slice di interi letti dal file e un eventuale errore
 func Load(path_jason string) (*Storage, error) {
 	// lettura del contenuto del file
@@ -46,7 +44,7 @@ func (s *Storage) Print() {
 	fmt.Println()
 }
 
-// Dump method, for the Storage struct, accepts a path to a file and stores it into it (if the file is not empty overwrite it)
+// Dump method, for the Storage struct, accepts a path to a file json and stores the struct into it (if the file is not empty overwrite it)
 func (s *Storage) Dump(path string) error {
 	// conversione della slice di interi (s.store) in JSON
 	file, err := json.Marshal(s.store)
