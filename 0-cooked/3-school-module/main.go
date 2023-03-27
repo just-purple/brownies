@@ -6,7 +6,7 @@ import (
 	"fmt"
 	// in go.mod file you can find the module
 	// this path appeared after command+s e moccoli
-	"github.com/just-purple/brownies/3-school-module/school"
+	"github.com/just-purple/brownies/0-cooked/3-school-module/school"
 )
 
 func main() {

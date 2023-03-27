@@ -3,30 +3,30 @@ package main
 import (
 	"fmt"
 
-	"github.com/just-purple/brownies/7-json-out/storage"
+	"github.com/just-purple/brownies/0-cooked/6-pointing-out/storage"
 )
 
 const FILE_PATH = "./storage.txt"
-const JASON_PATH = "./storage.json"
+const WRONG_FILE_PATH = "./wrong_storage.txt"
+
+// questo non c'è, il file txt non esiste
+const NOT_EXISTING_PATH = "./wrong_path.txt"
 
 func main() {
-	// Many programming languages have their own way of storing data internally, that other languages don’t understand.
-	// To allow these languages to interact (communicate between one program and another), the data needs to be converted to a common format they can all understand.
-	// One of data interchange formats is JSON (JavaScript Object Notation), a popular way to transmit data over the internet as well as between programs in the same system.
-	ints, err := storage.Load(JASON_PATH)
+
+	ints, err := storage.Load(FILE_PATH)
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return
 	}
-	fmt.Println("Storage after Load with file json: ")
 	ints.Print()
 
 	ints.Inc()
 	fmt.Println("After increments by 1: ")
 	ints.Print()
 
-	ints.Dump(JASON_PATH)
-	fmt.Println("Check storage.json")
+	ints.Dump(FILE_PATH)
+	fmt.Println("Check storage.txt")
 
 	// sintassi dei puntatori:
 	// simbolo * permette di accedere al valore contenuto in una locazione di memoria cui il puntatore fa riferimento;

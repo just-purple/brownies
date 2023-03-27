@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/just-purple/brownies/5-storing-out/storage"
+	"github.com/just-purple/brownies/0-cooked/5-storing-out/storage"
 )
 
 const FILE_PATH = "./storage.txt"

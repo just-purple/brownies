@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/just-purple/brownies/4-student-record/school"
+	"github.com/just-purple/brownies/0-cooked/4-student-record/school"
 )
 
 func main() {
