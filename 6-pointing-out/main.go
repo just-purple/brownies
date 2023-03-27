@@ -13,18 +13,20 @@ const WRONG_FILE_PATH = "./wrong_storage.txt"
 const NOT_EXISTING_PATH = "./wrong_path.txt"
 
 func main() {
+
 	ints, err := storage.Load(FILE_PATH)
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return
 	}
-
 	ints.Print()
+
 	ints.Inc()
 	fmt.Println("After increments by 1: ")
 	ints.Print()
 
 	ints.Dump(FILE_PATH)
+	fmt.Println("Check storage.txt")
 
 	// sintassi dei puntatori:
 	// simbolo * permette di accedere al valore contenuto in una locazione di memoria cui il puntatore fa riferimento;
@@ -32,12 +34,12 @@ func main() {
 	// taken viene passato alla funzione Take per riferimento, in questo modo
 	// non viene gestito il valore di taken bensì l'indirizzo della locazione di memoria in cui si trova
 	taken := 0
-	err = ints.Take(2, &taken)
+	err = ints.Take(0, &taken)
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return
 	}
-	fmt.Println("Taken: ", taken)
+	fmt.Println("Taken index 0: ", taken)
 
 	ints.Add(100)
 	fmt.Println("After add 100 at the end: ")
@@ -52,8 +54,10 @@ func main() {
 	ints.Print()
 
 	ints.FunkyReduce()
-	fmt.Println("After FunkyReduce (rimozione dei numeri pari): ")
+	fmt.Println("After FunkyReduce: ")
 	ints.Print()
 
-	// ints.Dump("sumup.txt")
+	ints.Dump("sumup.txt")
+	fmt.Println("Now check sumup.txt")
+
 }

@@ -127,7 +127,7 @@ func (s *Storage) Remove(position int) error {
 		return errors.New("invalid position")
 	}
 	// If you want to keep your array ordered:
-	//  all of the elements at the right of the deleting index you have to shift by one to the left
+	// all of the elements at the right of the deleting index you have to shift by one to the left
 	// dentro la funzione non posso mettere s.store poichè è un puntatore, quindi creo una variabile di appoggio slice
 	// dopo la rimozione metto la slice aggiornata dentro s.store
 	slice := s.store
@@ -138,14 +138,16 @@ func (s *Storage) Remove(position int) error {
 	return nil
 }
 
-// method FunkyReduce which
-// add each next even number to each odd number
-// remove each even number
+// method FunkyReduce
 func (s *Storage) FunkyReduce() {
-	// remove even numbers
-	for i, v := range s.store {
-		if *v%2 == 0 {
-			s.Remove(i)
-		}
+	i := 0
+	// loop with entry condition so that if the last number is even leave it like it is
+	for i+1 < len(s.store) {
+		// add to each number in even position the following number (in odd position)
+		// per accedere al valore dell'elemento della slice metto il simbolo *
+		*s.store[i] += *s.store[i+1]
+		// then remove each number in odd position
+		s.Remove(i + 1)
+		i++
 	}
 }
