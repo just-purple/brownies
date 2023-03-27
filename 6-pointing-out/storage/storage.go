@@ -133,7 +133,6 @@ func (s *Storage) Remove(position int) error {
 	slice := s.store
 	slice = append(slice[:position], slice[position+1:]...)
 	s.store = slice
-
 	// it returns only an error which is not nil if the specified position does not exists
 	return nil
 }
@@ -144,12 +143,10 @@ func (s *Storage) FunkyReduce() {
 	// loop with entry condition so that if the last number is even leave it like it is
 	for i+1 < len(s.store) {
 		// add to each number in even position the following number (in odd position)
-		// per accedere al valore dell'elemento della slice metto il simbolo *
 		s.store[i] += s.store[i+1]
 		// then remove each number in odd position
 		s.Remove(i + 1)
 		i++
-		// remove even numbers
 	}
 
 }
