@@ -104,7 +104,7 @@ func (s *Storage) Inc() {
 // method Take takes the element at the specified index:
 // it takes an integer named position and an integer named taken by reference
 func (s *Storage) Take(position int, taken *int) error {
-	if position < 0 || position > len(s.store) {
+	if position < 0 || position >= len(s.store) {
 		return errors.New("invalid position")
 	}
 	*taken = s.store[position]
@@ -123,7 +123,7 @@ func (s *Storage) Add(number int) {
 // method Remove remove the element at the specified index:
 // it takes an integer named position
 func (s *Storage) Remove(position int) error {
-	if position < 0 || position > len(s.store) {
+	if position < 0 || position >= len(s.store) {
 		return errors.New("invalid position")
 	}
 	// If you want to keep your array ordered:
@@ -148,5 +148,4 @@ func (s *Storage) FunkyReduce() {
 		s.Remove(i + 1)
 		i++
 	}
-
 }

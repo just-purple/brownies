@@ -28,7 +28,8 @@ func Load(path_jason string) (*Storage, error) {
 	result := Storage{}
 	// la funzione Unmarshal prende (sempre?) per riferimento la struttura dati (slice) su cui scrivere il contenuto del file json
 	if err := json.Unmarshal(file, &result.store); err != nil {
-		return &Storage{}, err
+		// se devo tornare una storage vuota per riferimento (&Storage{}) allora posso fare return nill
+		return nil, err
 	}
 	// la funzione Load restituisce per riferimento la struct Storage (quindi la sua locazione in memoria)
 	return &result, nil
@@ -52,13 +53,11 @@ func (s *Storage) Dump(path string) error {
 		return err
 	}
 	// scrittura del JSON nel file, sovrascrivendo l'eventuale contenuto precedente se il file non è vuoto
+	// il codice 0644 da il permesso per sovrascirvere il file
 	err = ioutil.WriteFile(path, file, 0644)
 	// in caso di errore durante la conversione o la scrittura, la funzione restituisce un errore
-	if err != nil {
-		return err
-	}
-
-	return nil
+	// nel caso in cui non ci siano stati errori err è nill
+	return err
 }
 
 // method Inc accepts no parameter and increments all the value inside of the storage by 1
@@ -71,7 +70,7 @@ func (s *Storage) Inc() {
 // method Take takes the element at the specified index:
 // it takes an integer named position and an integer named taken by reference
 func (s *Storage) Take(position int, taken *int) error {
-	if position < 0 || position > len(s.store) {
+	if position < 0 || position >= len(s.store) {
 		return errors.New("invalid position")
 	}
 	*taken = s.store[position]
@@ -90,7 +89,7 @@ func (s *Storage) Add(number int) {
 // method Remove remove the element at the specified index:
 // it takes an integer named position
 func (s *Storage) Remove(position int) error {
-	if position < 0 || position > len(s.store) {
+	if position < 0 || position >= len(s.store) {
 		return errors.New("invalid position")
 	}
 	// If you want to keep your array ordered:
