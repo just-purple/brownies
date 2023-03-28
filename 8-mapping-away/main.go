@@ -3,8 +3,29 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
+
+func validFlag(flag int) error {
+	if flag < -1 || flag > 3 {
+		return errors.New("invalid input")
+	}
+	return nil
+}
+func validPhone(phone string) error {
+	if len(phone) != 10 {
+		return errors.New("invalid phone-number")
+	}
+	return nil
+}
+func presentName(name string, contacts map[string]string) error {
+	_, isPresent := contacts[name]
+	if !isPresent {
+		return errors.New("name not present")
+	}
+	return nil
+}
 
 var prompt = `Type
 	0 to exit
@@ -14,7 +35,6 @@ var prompt = `Type
 `
 
 func main() {
-
 	contacts := map[string]string{}
 	contacts["ale"] = "3493932811"
 	contacts["leonora"] = "3401409831"
@@ -28,8 +48,9 @@ func main() {
 		fmt.Println("\n Option: ")
 		fmt.Scanln(&flag)
 		// controllo dell'input
-		if flag < -1 || flag > 3 {
-			fmt.Println("Error: invalid input")
+		err := validFlag(flag)
+		if err != nil {
+			fmt.Println("Error:", err.Error())
 			return
 		}
 		// type 0 to exit
@@ -46,14 +67,15 @@ func main() {
 			// se provo a inserire una chiave gia esistente, il valore associato a quella chiave viene aggiornato all'ultimo inserimento
 			_, isPresent := contacts[name]
 			if isPresent {
-				fmt.Println("Update phone number: ")
+				fmt.Println("Update phone-number: ")
 			} else {
 				fmt.Println("Phone-number: ")
 			}
 			fmt.Scanln(&phone)
 			// controllo che il numero inserito rispetti la lunghezza di un numero di telefono
-			if len(phone) != 10 {
-				fmt.Println("Error: invalid phone-number")
+			err := validPhone(phone)
+			if err != nil {
+				fmt.Println("Error:", err.Error())
 				return
 			}
 			contacts[name] = phone
@@ -64,27 +86,25 @@ func main() {
 			fmt.Println("Name: ")
 			fmt.Scanln(&name)
 			// controllo che il nome inserito sia nella mappa
-			_, isPresent := contacts[name]
-			if isPresent {
-				delete(contacts, name)
-			} else {
-				fmt.Println("Error: name not present")
+			err := presentName(name, contacts)
+			if err != nil {
+				fmt.Println("Error:", err.Error())
 				return
 			}
+			delete(contacts, name)
 		}
 		// type 3 to retrieve a phone-number by specifying a name
 		if flag == 3 {
 			name := ""
 			fmt.Println("Name: ")
 			fmt.Scanln(&name)
-			_, isPresent := contacts[name]
 			// controllo che il nome sia presente
-			if isPresent {
-				fmt.Println("Phone-number:\n", contacts[name])
-			} else {
-				fmt.Println("Error: name not present")
+			err := presentName(name, contacts)
+			if err != nil {
+				fmt.Println("Error:", err.Error())
 				return
 			}
+			fmt.Println("Phone-number:\n", contacts[name])
 		}
 		// stampa della mappa
 		if flag == -1 {
