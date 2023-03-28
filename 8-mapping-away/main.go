@@ -67,7 +67,7 @@ func main() {
 			// se provo a inserire una chiave gia esistente, il valore associato a quella chiave viene aggiornato all'ultimo inserimento
 			_, isPresent := contacts[name]
 			if isPresent {
-				fmt.Println("Update phone-number: ")
+				fmt.Println("Update ", contacts[name], "phone-number: ")
 			} else {
 				fmt.Println("Phone-number: ")
 			}
