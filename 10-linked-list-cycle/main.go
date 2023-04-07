@@ -7,7 +7,6 @@ import (
 func main() {
 
 	sl := &ListNode{}
-
 	for i := 0; i < 5; i++ {
 		sl.Insert(i)
 	}
@@ -22,13 +21,53 @@ func main() {
 	} else {
 		fmt.Println("no loop")
 	}
+
+	ll := &LinkedList{}
+	ll.append(101)
+	ll.append(102)
+	ll.append(103)
+	ll.append(104)
+
+	// fmt.Printf("length is  %d \n", ll.length) //length is 6
+	fmt.Printf("head is %d \n", ll.head.Val) //head is 101
+	fmt.Printf("tail is %d \n", ll.tail.Val) //tail is 104
 }
 
 // Definition for singly-linked list
-// node e linked list struct
+// Structure that represents each node in the linked list.
+// Each node will have an integer value called Val and a second value called Next, which is a pointer to the next node
 type ListNode struct {
 	Val  int
 	Next *ListNode
+}
+
+// The linked list struct have head and tail nodes pointer references of the linked list. It will also have a length value that keeps track of how long the linked list is.
+type LinkedList struct {
+	head *ListNode
+	tail *ListNode
+	// length int
+}
+
+// implementare una funzione che inserisce in coda usando il puntatore di coda (quindi non serve il for)
+// The append method receives the integer Val that needs into to be added into a new node to the end of the linked list.
+// The append method receives the integer Val that needs to be added to the linked list.
+// It first creates a ListNode from the value and assigns the pointer reference to the variable newNode.
+// The next step is to check if the current linked list has no head and, if it does, it assigns the newNode created to the head and tail of the linked list.
+// If there is a head node present, the tail node’s next value will be assigned the new node (newNode) and the new node created earlier will be made the tail node. Lastly, this method increases the value of the list length in order to keep track of the linked list size.
+func (list *LinkedList) append(data int) {
+	//creates a new node that will be added to the linkedList
+	newNode := &ListNode{
+		Val: data,
+	}
+	if list.head == nil {
+		list.head = newNode
+		list.tail = newNode
+	} else {
+		list.tail.Next = newNode
+		list.tail = newNode
+	}
+	// increase the length value of the linked list by one
+	// list.length++
 }
 
 // inserimento, push to a linked list
