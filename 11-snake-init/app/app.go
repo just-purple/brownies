@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/eiannone/keyboard"
+	"github.com/just-purple/brownies/11-snake-init/terminal"
 )
 
 const APPLE = "🍎"
@@ -19,10 +20,7 @@ type App struct {
 	Apples     []Pair
 	Snake      Pair
 	Direction  Pair
-}
-
-func clear() {
-	fmt.Print("\033c")
+	Delay      time.Duration
 }
 
 func (a *App) handleInput(input keyboard.Key) {
@@ -36,6 +34,8 @@ func (a *App) handleInput(input keyboard.Key) {
 
 func (a *App) draw() {
 	fmt.Println("Press esc to exit")
+
+	// top border
 	fmt.Print("┎")
 	for x := 0; x < a.PlayGround.X; x++ {
 		fmt.Print("-")
@@ -43,10 +43,11 @@ func (a *App) draw() {
 	fmt.Println("┐")
 
 	for y := 0; y < a.PlayGround.Y; y++ {
+		// left border
 		fmt.Print("|")
-		for x := 0; x < a.PlayGround.X; x++ {
 
-			// inside the frame
+		// inside the frame
+		for x := 0; x < a.PlayGround.X; x++ {
 			if x == a.Snake.X && y == a.Snake.Y {
 				fmt.Print(SNAKE_BODY)
 				continue
@@ -54,8 +55,12 @@ func (a *App) draw() {
 
 			fmt.Print(" ")
 		}
+
+		// right border
 		fmt.Println("|")
 	}
+
+	// bottom border
 
 	fmt.Print("┖")
 	for x := 0; x < a.PlayGround.X; x++ {
@@ -80,7 +85,7 @@ func (a *App) evaluate() {
 }
 
 func (a *App) Run() {
-	fmt.Print("\033[?25l") // Hide the cursor
+	terminal.HideCursor()
 	inputChannel := make(chan keyboard.Key)
 
 	// run this function over the input channel
@@ -108,13 +113,12 @@ stdinloop:
 				break stdinloop
 			}
 			a.handleInput(input)
-		case <-time.After(100 * time.Millisecond):
-			clear()
+
+		case <-time.After(a.Delay):
+			terminal.Clean()
 			a.evaluate()
 			a.draw()
 		}
 	}
-
-	fmt.Print("\033[?25h") // show the cursor
-
+	terminal.ShowCursor()
 }

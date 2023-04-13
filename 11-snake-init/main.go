@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/just-purple/brownies/11-snake-init/app"
 )
 
@@ -10,9 +12,10 @@ func main() {
 
 	// MAYBE: this could return a score :)
 	app := &app.App{
-		PlayGround: app.Pair{X: 10, Y: 10},
+		PlayGround: app.Pair{X: 30, Y: 10},
 		Snake:      app.Pair{X: 1, Y: 1},
 		Direction:  app.Pair{X: 1, Y: 0},
+		Delay:      100 * time.Millisecond,
 	}
 
 	app.Run()
