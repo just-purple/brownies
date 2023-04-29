@@ -53,7 +53,6 @@ func main() {
 			topScores = topScores[:10]
 		}
 	}
-	fmt.Println(topScores)
 	err = setTop(topScores, JSON_PATH)
 	if err != nil {
 		fmt.Println("errore:", err)

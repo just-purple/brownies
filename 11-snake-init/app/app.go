@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
@@ -165,57 +166,61 @@ func (a *App) evaluate() {
 }
 
 func (a *App) Run() (int, error) {
+	terminal.HideCursor()
+	defer terminal.ShowCursor()
+
 	a.snake = make([]*Pair, a.StartingLen)
+
+	// placing the snake in the starting direction
 	for i := 0; i < a.StartingLen; i++ {
 		a.snake[i] = &Pair{
 			X: a.StartingSnake.X - a.Direction.X*i,
 			Y: a.StartingSnake.Y - a.Direction.Y*i,
 		}
-
 	}
-	a.placeApple()
-	terminal.HideCursor()
-	inputChannel := make(chan keyboard.Key)
-	ctx, cancel := context.WithCancel(context.Background())
 
+	a.placeApple()
+
+	input := make(chan keyboard.Key)
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	// run this function over the input channel
-	go func(ctx context.Context, ch chan keyboard.Key) {
+	go func(ctx context.Context) {
 		for {
 			select {
 			case <-ctx.Done():
-				close(ch)
+				close(input)
 				return
-
 			default:
 				_, key, err := keyboard.GetSingleKey()
 				if err != nil || key == keyboard.KeyEsc {
+					close(input)
 					return
 				}
-				ch <- key
+				input <- key
 			}
-
 		}
-	}(ctx, inputChannel)
+	}(ctx)
 
 	for {
 		// select the first available channel
 		select {
-		case input, ok := <-inputChannel:
+		case input, ok := <-input:
 			if !ok {
-				terminal.ShowCursor()
-				cancel()
-				return len(a.snake), nil //TODO errors.New("game stopped")
+				return len(a.snake), errors.New("game stopped")
 			}
 			a.handleInput(input)
 
 		case <-time.After(a.Delay):
 			terminal.Clean()
+
 			a.evaluate()
 			if a.isDead() {
-				cancel()
-				terminal.ShowCursor()
+				keyboard.Close()
 				return len(a.snake), nil
 			}
+
 			if a.isEating() {
 				// il serpente cresce di un pezzettino
 				a.snake = append(a.snake, &Pair{})
