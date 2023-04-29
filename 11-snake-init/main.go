@@ -45,7 +45,7 @@ func main() {
 
 		new := UserScore{
 			Name:  name,
-			Score: score,
+			Score: score - app.StartingLen,
 		}
 
 		topScores = orderedAppend(topScores, new)
