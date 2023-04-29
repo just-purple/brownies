@@ -49,16 +49,16 @@ type LinkedList struct {
 }
 
 // implementare una funzione che inserisce in coda usando il puntatore di coda (quindi non serve il for)
-// The append method receives the integer Val that needs into to be added into a new node to the end of the linked list.
-// The append method receives the integer Val that needs to be added to the linked list.
-// It first creates a ListNode from the value and assigns the pointer reference to the variable newNode.
-// The next step is to check if the current linked list has no head and, if it does, it assigns the newNode created to the head and tail of the linked list.
-// If there is a head node present, the tail node’s next value will be assigned the new node (newNode) and the new node created earlier will be made the tail node. Lastly, this method increases the value of the list length in order to keep track of the linked list size.
+// The append method receives the integer Val that needs to be added into a new node to the end of the linked list.
 func (list *LinkedList) append(data int) {
 	//creates a new node that will be added to the linkedList
+	// It first creates a ListNode from the value and assigns the pointer reference to the variable newNode.
 	newNode := &ListNode{
 		Val: data,
 	}
+	// The next step is to check if the current linked list has no head and,
+	// if it does, it assigns the newNode created to the head and tail of the linked list.
+	// If there is a head node present, the tail node’s next value will be assigned the newNode and the new node created earlier will be made the tail node.
 	if list.head == nil {
 		list.head = newNode
 		list.tail = newNode
@@ -66,7 +66,7 @@ func (list *LinkedList) append(data int) {
 		list.tail.Next = newNode
 		list.tail = newNode
 	}
-	// increase the length value of the linked list by one
+	// Lastly increase the value of the list length in order to keep track of the linked list size.
 	// list.length++
 }
 
@@ -100,11 +100,9 @@ func hasCycle(head *ListNode) bool {
 		return false
 	}
 
-	slow := head
-	fast := head
+	slow, fast := head, head
 
-	// dato il controllo che faccio all'inizio posso togliere la prima condizione?
-	for slow != nil && fast != nil && fast.Next != nil {
+	for fast != nil && fast.Next != nil {
 		slow = slow.Next
 		fast = fast.Next.Next
 		if slow == fast {
