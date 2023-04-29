@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"time"
@@ -175,22 +176,26 @@ func (a *App) Run() (int, error) {
 	a.placeApple()
 	terminal.HideCursor()
 	inputChannel := make(chan keyboard.Key)
+	ctx, cancel := context.WithCancel(context.Background())
 
 	// run this function over the input channel
-	go func(ch chan keyboard.Key) {
+	go func(ctx context.Context, ch chan keyboard.Key) {
 		for {
-			_, key, err := keyboard.GetSingleKey()
-			if err != nil {
+			select {
+			case <-ctx.Done():
 				close(ch)
 				return
+
+			default:
+				_, key, err := keyboard.GetSingleKey()
+				if err != nil || key == keyboard.KeyEsc {
+					return
+				}
+				ch <- key
 			}
-			if key == keyboard.KeyEsc {
-				close(ch)
-				return
-			}
-			ch <- key
+
 		}
-	}(inputChannel)
+	}(ctx, inputChannel)
 
 	for {
 		// select the first available channel
@@ -198,6 +203,7 @@ func (a *App) Run() (int, error) {
 		case input, ok := <-inputChannel:
 			if !ok {
 				terminal.ShowCursor()
+				cancel()
 				return len(a.snake), nil //TODO errors.New("game stopped")
 			}
 			a.handleInput(input)
@@ -206,6 +212,7 @@ func (a *App) Run() (int, error) {
 			terminal.Clean()
 			a.evaluate()
 			if a.isDead() {
+				cancel()
 				terminal.ShowCursor()
 				return len(a.snake), nil
 			}
